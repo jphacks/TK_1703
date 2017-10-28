@@ -27,13 +27,6 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-app.post('/', function(req, res) {
-    // リクエストボディを出力
-    console.log(req.body);
-    console.log('Slack webhook recieved');
-
-});
-
 app.get('/incr/:type', function(req, res) {
     if(req.params.type == 0) {
         negativeCount++;
@@ -69,22 +62,22 @@ bot.on('start', function() {
     };
 
     // define channel, where bot exist. You can adjust it there https://my.slack.com/services
-    bot.postMessageToChannel('banana-test', 'meow!', params);
-
-    // define existing username instead of 'user_name'
-    // bot.postMessageToUser('user_name', 'meow!', params);
-
-    // If you add a 'slackbot' property,
-    // you will post to another user's slackbot channel instead of a direct message
-    // bot.postMessageToUser('user_name', 'meow!', { 'slackbot': true, icon_emoji: ':cat:' });
-
-    // define private group instead of 'private_group', where bot exist
-    // bot.postMessageToGroup('private_group', 'meow!', params);
+    bot.postMessageToChannel('banana-test', 'バナナ!', params);
 });
 
 bot.on('message', function(data) {
     // all ingoing events https://api.slack.com/rtm
-    console.log(data);
+    // console.log(data);
+    if(data.type !== "message"){
+        return;
+    }
+    console.log(data.text);
+    // more information about additional params https://api.slack.com/methods/chat.postMessage
+    var params = {
+        icon_emoji: ':banana:'
+    };
+    bot.postMessageToChannel('banana-test', data.text, params);
+
 });
 
 /*
