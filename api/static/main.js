@@ -21,11 +21,12 @@ recognition.addEventListener('result', function(event){
     if(text.length > 10) {
         stop();
     }
+    $.get("https://kyamuise.xyz:5000/incr/1");
 
     if(event.results.item(0).isFinal) {
         if(/だめ|ダメ|でも|しかし|いや|嫌/.test(text)) {
             console.log("negative");
-            $.get("https://kyamuise.xyz:5000/incr/1");
+            $.get("http://kyamuise.xyz:5000/incr/1");
         }
         console.log(event.results);
         setTimeout(record, 50);
