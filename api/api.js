@@ -71,6 +71,14 @@ wsServer.on('request', function(request) {
 app.post('/', function(req, res) {
     // リクエストボディを出力
     console.log(req.body);
+    console.log('Slack webhook recieved');
 
-    res.send('POST request to the homepage');
+    if(req.body.trigger_word == "爽やか") {
+        var res = {
+            command: 0,
+            duration: 300
+        };
+        
+        connection.send(JSON.stringify(res));
+    }
 })

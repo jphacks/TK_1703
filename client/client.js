@@ -19,7 +19,7 @@ client.on('connect', function(connection) {
         if (message.type === 'utf8') {
             console.log("Received: '" + message.utf8Data + "'");
             let body = JSON.parse(message.utf8Data)
-            sendCommand(1, 300);//TODO ここはSlackをよしなに
+            sendCommand(body.command, body.duration);//TODO ここはSlackをよしなに
         }
     });
 
@@ -48,4 +48,4 @@ var sendCommand = function (command, duration) {
     });
 }
 
-client.connect('ws://localhost:8080/', 'echo-protocol');
+client.connect('ws://kyamuise.xyz:5000/', 'echo-protocol');
