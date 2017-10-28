@@ -11,6 +11,8 @@ var connection;
 var server = app.listen(8080, function () {
     console.log("Node.js is listening to PORT:" + server.address().port);
 });
+app.use(express.static('static'));
+
 
 var negativeCount = 0;
 
@@ -75,10 +77,6 @@ app.post('/', function(req, res) {
 
         connection.sendUTF(JSON.stringify(res));
     }
-});
-
-app.get('/speech', function (req, res) {
-    res.sendfile(__dirname + '/static/speech.html');
 });
 
 app.get('/incr/:type', function(req, res) {
