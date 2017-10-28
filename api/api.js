@@ -11,7 +11,7 @@ var connection;
 var server = app.listen(8080, function () {
     console.log("Node.js is listening to PORT:" + server.address().port);
 });
-app.use(express.static('static'));
+app.use('/static', express.static(__dirname + '/static'));
 
 
 var negativeCount = 0;
