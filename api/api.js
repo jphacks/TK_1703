@@ -75,7 +75,11 @@ app.post('/', function(req, res) {
 
         connection.sendUTF(JSON.stringify(res));
     }
-})
+});
+
+app.get('/speech', function (req, res) {
+    res.sendfile(__dirname + '/static/speech.html');
+});
 
 app.get('/incr/:type', function(req, res) {
     if(req.params.type == 1) {
