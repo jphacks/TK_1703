@@ -12,6 +12,8 @@ var server = app.listen(8080, function () {
     console.log("Node.js is listening to PORT:" + server.address().port);
 });
 
+var negativeCount = 0;
+
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -76,5 +78,9 @@ app.post('/', function(req, res) {
 })
 
 app.get('/incr/:type', function(req, res) {
-  res.send('respond user Info userid:' + req.params.type);
+    if(req.params.type == 1) {
+        negativeCount++;
+        console.log("negativeCount: "+negativeCount);
+    }
+  res.send('type:' + req.params.type);
 });
