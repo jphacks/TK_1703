@@ -21,7 +21,6 @@ recognition.addEventListener('result', function(event){
     if(text.length > 10) {
         stop();
     }
-    $.get("https://kyamuise.xyz:1242/incr/1");
 
     if(event.results.item(0).isFinal) {
         if(/だめ|ダメ|でも|しかし|いや|嫌/.test(text)) {
