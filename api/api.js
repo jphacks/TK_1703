@@ -67,7 +67,7 @@ bot.on('start', function() {
 bot.on('message', function(data) {
     // all ingoing events https://api.slack.com/rtm
     console.log(data);
-    if(data.type !== "message" || data.user == "U7RHQUERJ"){
+    if(data.type !== "message" || data.bot_id == "B7RL9BNSZ"){
         return;
     }
     console.log(data.text);
