@@ -51,7 +51,7 @@ app.get('/incr/:type', function(req, res) {
  * Slack Bot
  */
 var bot = new SlackBot({
-    token: 'xoxb-263602966868-UmJ5rlDQDgxCecilenyuHQtC', // Add a bot https://my.slack.com/services/new/bot and put the token
+    token: 'xoxb-263602966868-ltsgEsQnFP2kmm7PUMbzqGQm', // Add a bot https://my.slack.com/services/new/bot and put the token
     name: 'banana-bot'
 });
 
@@ -70,7 +70,10 @@ bot.on('message', function(data) {
     if(data.type !== "message" || data.bot_id == "B7RL9BNSZ"){
         return;
     }
-    console.log(data.text);
+
+    var text = data.text;
+    console.log(text);
+
     // more information about additional params https://api.slack.com/methods/chat.postMessage
     var params = {
     };
