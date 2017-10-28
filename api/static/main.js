@@ -5,6 +5,8 @@ recognition.lang = 'ja';
 recognition.continuous = true;
 recognition.interimResults = true;
 
+var negativeWords = /だめ|ダメ|でも|しかし|いや|嫌/;
+
 function record() {
     recognition.start();
 }
@@ -23,7 +25,7 @@ recognition.addEventListener('result', function(event){
     }
 
     if(event.results.item(0).isFinal) {
-        if(/だめ|ダメ|でも|しかし|いや|嫌/.test(text)) {
+        if(negativeWords.test(text)) {
             console.log("negative");
             $.get("http://kyamuise.xyz:1242/incr/1");
         }
