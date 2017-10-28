@@ -15,6 +15,7 @@ app.use('/static', express.static(__dirname + '/static'));
 
 
 var negativeCount = 0;
+var positiveCount = 0;
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -69,19 +70,29 @@ app.post('/', function(req, res) {
     console.log(req.body);
     console.log('Slack webhook recieved');
 
-    if(req.body.trigger_word == "爽やか") {
-        var res = {
-            command: 0
-        };
-
-        connection.sendUTF(JSON.stringify(res));
-    }
 });
 
 app.get('/incr/:type', function(req, res) {
-    if(req.params.type == 1) {
+    if(req.params.type == 0) {
         negativeCount++;
         console.log("negativeCount: "+negativeCount);
+        if (negativeCount == 5) {
+            sendSmell(0);
+        }
     }
-  res.send('type:' + req.params.type);
+    if(req.params.type == 1) {
+        negativeCount++;
+        console.log("positiveCount: "+positiveCount);
+        if (positiveCount == 5) {
+            sendSmell(1);
+        }
+    }
+    res.send('type:' + req.params.type);
 });
+
+function sendSmell(type) {
+    var res = {
+        command: type
+    };
+    connection.sendUTF(JSON.stringify(res));
+}
