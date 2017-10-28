@@ -58,7 +58,6 @@ var bot = new SlackBot({
 bot.on('start', function() {
     // more information about additional params https://api.slack.com/methods/chat.postMessage
     var params = {
-        icon_emoji: ':banana:'
     };
 
     // define channel, where bot exist. You can adjust it there https://my.slack.com/services
@@ -67,15 +66,15 @@ bot.on('start', function() {
 
 bot.on('message', function(data) {
     // all ingoing events https://api.slack.com/rtm
-    // console.log(data);
-    if(data.type !== "message"){
+    console.log(data);
+    if(data.type !== "message" || data.user == "U7RHQUERJ"){
         return;
     }
     console.log(data.text);
     // more information about additional params https://api.slack.com/methods/chat.postMessage
     var params = {
-        icon_emoji: ':banana:'
     };
+    if()
     bot.postMessageToChannel('banana-test', data.text, params);
 
 });
