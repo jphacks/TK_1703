@@ -1,21 +1,12 @@
 #!/usr/bin/env node
-var WebSocketServer = require('websocket').server;
-var http = require('http');
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
+const WebSocketServer = require('websocket').server;
+const http = require('http');
+const express = require('express');
+const bodyParser = require('body-parser');
 
+var app = express();
 
 var connection;
-
-// var server = http.createServer(function(request, response) {
-//     console.log((new Date()) + ' Received request for ' + request.url);
-//     response.writeHead(404);
-//     response.end();
-// });
-// server.listen(8080, function() {
-//     console.log((new Date()) + ' Server is listening on port 8080');
-// });
 
 var server = app.listen(8080, function () {
     console.log("Node.js is listening to PORT:" + server.address().port);
@@ -78,7 +69,7 @@ app.post('/', function(req, res) {
             command: 0,
             duration: 300
         };
-        
-        connection.send(JSON.stringify(res));
+
+        connection.sendUTF(JSON.stringify(res));
     }
 })

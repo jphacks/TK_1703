@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-var WebSocketClient = require('websocket').client;
+const WebSocketClient = require('websocket').client;
+const request = require('request');
+
 
 var client = new WebSocketClient();
 
@@ -33,7 +35,6 @@ client.on('connect', function(connection) {
 });
 
 var sendCommand = function (command, duration) {
-    const request = require('request');
 
     var URL = 'http://192.168.0.4:8000/cgi-bin/Banana.py';
 
