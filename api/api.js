@@ -3,6 +3,7 @@ const WebSocketServer = require('websocket').server;
 const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
+const SlackBot = require('slackbots');
 
 var app = express();
 
@@ -17,12 +18,78 @@ app.use('/static', express.static(__dirname + '/static'));
 var negativeCount = 0;
 var positiveCount = 0;
 
+
+/*
+ * Express
+ */
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
 
+app.post('/', function(req, res) {
+    // リクエストボディを出力
+    console.log(req.body);
+    console.log('Slack webhook recieved');
 
+});
+
+app.get('/incr/:type', function(req, res) {
+    if(req.params.type == 0) {
+        negativeCount++;
+        console.log("negativeCount: "+negativeCount);
+        if (negativeCount == 5) {
+            sendSmellToClient(0);
+        }
+    }
+    if(req.params.type == 1) {
+        negativeCount++;
+        console.log("positiveCount: "+positiveCount);
+        if (positiveCount == 5) {
+            sendSmellToClient(1);
+        }
+    }
+    res.send('type:' + req.params.type);
+});
+
+
+
+/*
+ * Slack Bot
+ */
+var bot = new SlackBot({
+    token: 'xoxb-263602966868-UmJ5rlDQDgxCecilenyuHQtC', // Add a bot https://my.slack.com/services/new/bot and put the token
+    name: 'banana-bot'
+});
+
+bot.on('start', function() {
+    // more information about additional params https://api.slack.com/methods/chat.postMessage
+    var params = {
+        icon_emoji: ':banana:'
+    };
+
+    // define channel, where bot exist. You can adjust it there https://my.slack.com/services
+    bot.postMessageToChannel('banana-test', 'meow!', params);
+
+    // define existing username instead of 'user_name'
+    // bot.postMessageToUser('user_name', 'meow!', params);
+
+    // If you add a 'slackbot' property,
+    // you will post to another user's slackbot channel instead of a direct message
+    // bot.postMessageToUser('user_name', 'meow!', { 'slackbot': true, icon_emoji: ':cat:' });
+
+    // define private group instead of 'private_group', where bot exist
+    // bot.postMessageToGroup('private_group', 'meow!', params);
+});
+
+bot.on('message', function(data) {
+    // all ingoing events https://api.slack.com/rtm
+    console.log(data);
+});
+
+/*
+ * WebSocket client
+ */
 wsServer = new WebSocketServer({
     httpServer: server,
     // You should not use autoAcceptConnections for production
@@ -64,33 +131,7 @@ wsServer.on('request', function(request) {
     });
 });
 
-
-app.post('/', function(req, res) {
-    // リクエストボディを出力
-    console.log(req.body);
-    console.log('Slack webhook recieved');
-
-});
-
-app.get('/incr/:type', function(req, res) {
-    if(req.params.type == 0) {
-        negativeCount++;
-        console.log("negativeCount: "+negativeCount);
-        if (negativeCount == 5) {
-            sendSmell(0);
-        }
-    }
-    if(req.params.type == 1) {
-        negativeCount++;
-        console.log("positiveCount: "+positiveCount);
-        if (positiveCount == 5) {
-            sendSmell(1);
-        }
-    }
-    res.send('type:' + req.params.type);
-});
-
-function sendSmell(type) {
+function sendSmellToClient(type) {
     var res = {
         command: type
     };
