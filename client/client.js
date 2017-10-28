@@ -41,8 +41,7 @@ var sendCommand = function (command, duration) {
     request.get({
         uri: URL,
         qs: {
-            command: command,
-            duration: duration
+            command: command
         },
     }, function(err, req, data){
         console.log(data);

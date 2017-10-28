@@ -71,8 +71,7 @@ app.post('/', function(req, res) {
 
     if(req.body.trigger_word == "爽やか") {
         var res = {
-            command: 0,
-            duration: 300
+            command: 0
         };
 
         connection.sendUTF(JSON.stringify(res));
