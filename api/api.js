@@ -52,7 +52,7 @@ var bot = new SlackBot({
 
 var timetable = {
     enabled: false,
-    state: 0, //0開始前、1セクション数入力、2香り設定、3終了
+    state: 0, //0開始前、1セクション数入力完了、2時間設定完了, 3香り設定完了、4終了
     numSections: 0,
     sections: [
 
@@ -105,6 +105,26 @@ function createTimetable(text) {
     switch (timetable.state) {
         case 1:
             timetable.numSections = Number(text);
+            timetable.state = 2;//時間入力待ち
+            sendTextToSlack((timetable.sections.length+1)+"番目のセクションは何分間ですか？");
+            break;
+        case 2:
+            timetable.sections.push({duration: Number(text)});
+            timetable.state = 3; //香り入力待ち
+            sendTextToSlack((timetable.sections.length)+"番目のセクションの香りを設定してください。");
+            break;
+        case 3:
+            timetable.sections[timetable.sections.length].smellId = text;
+            if(timetable.sections.length < timetable.numSections){
+                timetable.state = 2;//時間入力待ち
+            } else {
+                timetable.state = 4;//完了
+            }
+            sendTextToSlack((timetable.sections.length+1)+"番目のセクションは何分間ですか？");
+            break;
+        case 4:
+            timetable.sections[timetable.sections.length].smellId = text;
+            sendTextToSlack("タイムテーブルの作成が完了しました！");
             break;
         default:
 
