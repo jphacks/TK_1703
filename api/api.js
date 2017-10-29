@@ -58,7 +58,7 @@ var bot = new SlackBot({
 bot.on('start', function() {
     // more information about additional params https://api.slack.com/methods/chat.postMessage
     var params = {
-        icon_uri: "https://files.slack.com/files-pri/T0MBZ99GF-F7R15P42V/kagikaigi_icon_sq.png"
+        icon_url: "https://files.slack.com/files-pri/T0MBZ99GF-F7R15P42V/kagikaigi_icon_sq.png"
     };
 
     // define channel, where bot exist. You can adjust it there https://my.slack.com/services
