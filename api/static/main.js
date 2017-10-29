@@ -63,4 +63,7 @@ $(function() {
     // $("#recStart").on("click", (e) =>{
         record();
     // });
+    $("body").on("click", (e) =>{
+        record();
+    });
 });
