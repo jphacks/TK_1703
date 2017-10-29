@@ -46,7 +46,7 @@ app.get('/incr/:type', function(req, res) {
 * Slack Bot
 */
 var bot = new SlackBot({
-    token: 'xoxb-263602966868-uE4FTKfQz4slMyviSBpmsBtv', // Add a bot https://my.slack.com/services/new/bot and put the token
+    token: 'xoxb-263602966868-XtgyuYhOJpG969XzzJFNimeT', // Add a bot https://my.slack.com/services/new/bot and put the token
     name: 'banana-bot'
 });
 
