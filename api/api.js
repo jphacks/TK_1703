@@ -119,12 +119,14 @@ function createTimetable(text) {
                 timetable.state = 2;//時間入力待ち
             } else {
                 timetable.state = 4;//完了
+                sendTextToSlack("タイムテーブルの作成が完了しました！");
+                break;
             }
             sendTextToSlack((timetable.sections.length+1)+"番目のセクションは何分間ですか？");
             break;
         case 4:
-            timetable.sections[timetable.sections.length].smellId = text;
-            sendTextToSlack("タイムテーブルの作成が完了しました！");
+            sendTextToSlack("タイムテーブルが作成されています！");
+            sendTextToSlack(JSON.stringify(timetable));
             break;
         default:
 
