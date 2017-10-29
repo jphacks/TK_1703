@@ -150,6 +150,7 @@ function createTimetable(text) {
 function timetableTransitions() {
     for (var i = 0; i < timetable.numSections; i++) {
         var section = timetable.sections[i];
+        console.log(section);
         if(i == 0){
             sendSmellToClient(section.smellId);
             sendTextToSlack((i+1)+"番目のセクションです。");
