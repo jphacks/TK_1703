@@ -21,18 +21,18 @@ recognition.addEventListener('result', function(event){
     var text = event.results.item(0).item(0).transcript;
     $("#result_text").val(text);
     // console.log(event.results);
-    if(text.length > 10) {
-        stop();
-    }
+    // if(text.length > 10) {
+    //     stop();
+    // }
 
-    if(event.results.item(0).isFinal) {
+    // if(event.results.item(0).isFinal) {
         if(negativeWords.test(text)) {
             console.log("negative");
             $.get("https://kyamuise.xyz:1242/incr/1");
         }
         console.log(event.results);
-        setTimeout(record, 50);
-    }
+        // setTimeout(record, 50);
+    // }
 }, false);
 
 
