@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 const WebSocketServer = require('websocket').server;
-const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
 const SlackBot = require('slackbots');
@@ -32,14 +31,14 @@ app.get('/incr/:type', function(req, res) {
         negativeCount++;
         console.log("negativeCount: "+negativeCount);
         if (negativeCount == 5) {
-            sendSmellToClient(0);
+            sendSmellToClient("A");
         }
     }
     if(req.params.type == 1) {
         negativeCount++;
         console.log("positiveCount: "+positiveCount);
         if (positiveCount == 5) {
-            sendSmellToClient(1);
+            sendSmellToClient("B");
         }
     }
     res.send('type:' + req.params.type);
@@ -74,6 +73,7 @@ bot.on('message', function(data) {
     }
 
     var text = data.text;
+
     var smellId;
     if(mc = text.match(/([A-Da-d])\s*発射/)) {
         smellId = mc[1].toUpperCase();
