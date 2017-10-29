@@ -4,23 +4,21 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const SlackBot = require('slackbots');
 
-var app = express();
-
-var connection;
+/*
+* Express
+*/
 
 var server = app.listen(8080, function () {
     console.log("Node.js is listening to PORT:" + server.address().port);
 });
 app.use('/static', express.static(__dirname + '/static'));
 
+var app = express();
 
 var negativeCount = 0;
 var positiveCount = 0;
 
 
-/*
- * Express
- */
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -47,8 +45,8 @@ app.get('/incr/:type', function(req, res) {
 
 
 /*
- * Slack Bot
- */
+* Slack Bot
+*/
 var bot = new SlackBot({
     token: 'xoxb-263602966868-3D2HKK1BnAGH5g1GE9k1Y1BL', // Add a bot https://my.slack.com/services/new/bot and put the token
     name: 'banana-bot'
@@ -97,9 +95,12 @@ function sendTextToSlack(text) {
     };
     bot.postMessageToChannel('banana-test', text, params);
 }
+
 /*
- * WebSocket client
- */
+* WebSocket client
+*/
+var connection;
+
 wsServer = new WebSocketServer({
     httpServer: server,
     // You should not use autoAcceptConnections for production
@@ -111,16 +112,16 @@ wsServer = new WebSocketServer({
 });
 
 function originIsAllowed(origin) {
-  // put logic here to detect whether the specified origin is allowed.
-  return true;
+    // put logic here to detect whether the specified origin is allowed.
+    return true;
 }
 
 wsServer.on('request', function(request) {
     if (!originIsAllowed(request.origin)) {
-      // Make sure we only accept requests from an allowed origin
-      request.reject();
-      console.log((new Date()) + ' Connection from origin ' + request.origin + ' rejected.');
-      return;
+        // Make sure we only accept requests from an allowed origin
+        request.reject();
+        console.log((new Date()) + ' Connection from origin ' + request.origin + ' rejected.');
+        return;
     }
 
     connection = request.accept('echo-protocol', request.origin);
@@ -141,6 +142,9 @@ wsServer.on('request', function(request) {
     });
 });
 
+/*
+ * Utils
+ */
 function sendSmellToClient(type) {
     var res = {
         command: type
