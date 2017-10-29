@@ -28,7 +28,9 @@ function abort() {
 // 録音終了時トリガー
 recognition.addEventListener('result', function(event){
     var text = event.results.item(0).item(0).transcript;
-    $("#result_text").val(text);
+    // $("#result_text").val(text);
+    $("#te").html(text);
+
     // console.log(event.results);
     // if(text.length > 10) {
     //     stop();
