@@ -76,11 +76,14 @@ bot.on('message', function(data) {
     var text = data.text;
     var smellId;
     if(mc = text.match(/([A-Da-d])\s*発射/)) {
-        sendTextToSlack(mc[1].toUpperCase()+"の香りを発射します");
+        smellId = mc[1].toUpperCase();
+        sendTextToSlack(smellId+"の香りを発射します");
+        sendSmellToClient(smellId);
     }else if(mc = text.match(/([ＡＢＣＤａｂｃｄ])\s*発射/)) {
         // console.log(mc);
         smellId = String.fromCharCode(mc[1].charCodeAt(mc[1]) - 65248).toUpperCase();
         sendTextToSlack(smellId+"の香りを発射します");
+        sendSmellToClient(smellId);
     }
 
 
