@@ -32,7 +32,7 @@ app.get('/incr/:type', function(req, res) {
         }
     }
     if(req.params.type == 1) {
-        negativeCount++;
+        positiveCount++;
         console.log("positiveCount: "+positiveCount);
         if (positiveCount == 5) {
             sendSmellToClient("B");
