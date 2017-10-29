@@ -7,7 +7,7 @@
 ## 製品概要
 ### におい x Tech
 
-![logo](img/kagikaigi_logo@2x.png)
+<img src="img/kagikaigi_logo@2x.png" height="200" />
 
 ### 背景（製品開発のきっかけ、課題等）
 
