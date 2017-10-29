@@ -10,10 +10,19 @@ var positiveWords = /おっけー|OK|はい|了解|なるほど|いいね/;
 
 function record() {
     recognition.start();
+    console.log("started");
 }
 
 function stop() {
     recognition.stop();
+    console.log("stopped");
+
+}
+
+function abort() {
+    recognition.abort();
+    console.log("aborted");
+
 }
 
 // 録音終了時トリガー
@@ -29,7 +38,7 @@ recognition.addEventListener('result', function(event){
         if(negativeWords.test(text)) {
             console.log("negative");
             $.get("https://kyamuise.xyz:1242/incr/1");
-            recognition.abort();
+            abort();
             setTimeout(function () {
                 record();
             }, 20000);
