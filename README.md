@@ -2,7 +2,7 @@
 
 **デモ動画**
 
-[![かぎかいぎデモ1](video/demo2sum.png)](https://raw.githubusercontent.com/jphacks/TK_1703/master/video/demo2.mp4)
+[![かぎかいぎデモ1](video/thunm.png)](https://raw.githubusercontent.com/jphacks/TK_1703/master/video/demo.mp4)
 
 ## 製品概要
 ### におい x Tech
@@ -59,7 +59,7 @@
 例えば、
 - 「おっけー」「いいね！」などのポジティブな言葉が多く発せられた時
     - より気持ちがエキサイトするように柑橘系のかおり
--  「ダメ」「最悪」などのポジティブな言葉が多く発せられた時
+- 「ダメ」「最悪」などのポジティブな言葉が多く発せられた時
     - 気分が落ち着くようにアロマのかおり
 
 #### 2. かぐ時間(タイムテーブル)
