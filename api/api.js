@@ -56,7 +56,8 @@ var timetable = {
     numSections: 0,
     sections: [
 
-    ]
+    ],
+    startTime: 0,
 };
 
 bot.on('start', function() {
@@ -119,7 +120,7 @@ function createTimetable(text) {
             sendTextToSlack((timetable.sections.length+1)+"番目のセクションは何分間ですか？");
             break;
         case 2:
-            timetable.sections.push({duration: Number(text)});
+            timetable.sections.push({duration: Number(text)*60*1000});
             timetable.state = 3; //香り入力待ち
             sendTextToSlack((timetable.sections.length)+"番目のセクションの香りを設定してください。");
             break;
@@ -129,8 +130,10 @@ function createTimetable(text) {
                 timetable.state = 2;//時間入力待ち
             } else {
                 timetable.state = 4;//完了
-                sendTextToSlack("タイムテーブルの作成が完了しました！");
+                sendTextToSlack("タイムテーブルの作成が完了しました！\nスタートしました！");
+                timetable.startTime = new Date();
                 sendTextToSlack(JSON.stringify(timetable));
+                timetableTransitions();
                 break;
             }
             sendTextToSlack((timetable.sections.length+1)+"番目のセクションは何分間ですか？");
@@ -140,9 +143,23 @@ function createTimetable(text) {
             sendTextToSlack(JSON.stringify(timetable));
             break;
         default:
-
     }
     console.log(timetable);
+}
+
+function timetableTransitions() {
+    for (var i = 0; i < timetable.numSections; i++) {
+        var section = timetable.sections[i];
+        if(i == 0){
+            sendSmellToClient(section.smellId);
+            sendTextToSlack((i+1)+"番目のセクションです。");
+        }else{
+            setTimeout(function(){
+                sendSmellToClient(section.smellId);
+                sendTextToSlack((i+1)+"番目のセクションです。");
+            }, timetable.sections[i-1].duration);
+        }
+    }
 }
 
 function sendTextToSlack(text) {
