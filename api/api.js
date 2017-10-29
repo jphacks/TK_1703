@@ -158,7 +158,7 @@ function timetableTransitions() {
         }else{
             setTimeout(function(){
                 sendSmellToClient(section.smellId);
-                sendTextToSlack((i)+"番目のセクションです。");
+                sendTextToSlack((i+1)+"番目のセクションです。");
             }, timetable.sections[i-1].duration);
         }
     }
