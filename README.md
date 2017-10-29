@@ -2,7 +2,7 @@
 
 **デモ動画**
 
-[![かぎかいぎデモ1](video/thunm.png)](https://raw.githubusercontent.com/jphacks/TK_1703/master/video/demo.mp4)
+[![かぎかいぎデモ1](video/thumb.png)](https://raw.githubusercontent.com/jphacks/TK_1703/master/video/demo.mp4)
 
 ## 製品概要
 ### におい x Tech
@@ -101,9 +101,10 @@ Slack Botに話しかけることで指定のにおいを出すことができ�
 
 #### 例えば
 
-- 洗濯完了の通知
+- 家庭で洗濯完了の通知
 - 音を出せない場所でのアラーム
 - 会議以外での会話時の表現ツール
+- 舞台や劇団などでのタイミングの通知
 
 ## 開発内容・開発技術
 
