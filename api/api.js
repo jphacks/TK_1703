@@ -50,6 +50,15 @@ var bot = new SlackBot({
     name: 'banana-bot'
 });
 
+var timetable = {
+    enabled: false,
+    state: 0, //0開始前、1セクション数入力、2香り設定、3終了
+    numSections: 0,
+    sections: [
+
+    ]
+};
+
 bot.on('start', function() {
     // more information about additional params https://api.slack.com/methods/chat.postMessage
     var params = {
@@ -70,6 +79,11 @@ bot.on('message', function(data) {
 
     var text = data.text;
 
+    if(timetable.enabled) {
+        createTimetable(text);
+        return;
+    }
+
     var smellId;
     if(mc = text.match(/([A-Da-d])\s*発射/)) {
         smellId = mc[1].toUpperCase();
@@ -80,10 +94,23 @@ bot.on('message', function(data) {
         smellId = String.fromCharCode(mc[1].charCodeAt(mc[1]) - 65248).toUpperCase();
         sendTextToSlack(smellId+"の香りを発射します");
         sendSmellToClient(smellId);
+    }if(text.match(/タイムテーブル/)) {
+        timetable.enabled = true;
+        timetable.state = 1;
+        sendTextToSlack("タイムテーブルを作成します。セクション数を入力してください。");
     }
-
-
 });
+
+function createTimetable(text) {
+    switch (timetable.state) {
+        case 1:
+            timetable.numSections = Number(text);
+            break;
+        default:
+
+    }
+    console.log(timetable);
+}
 
 function sendTextToSlack(text) {
     // more information about additional params https://api.slack.com/methods/chat.postMessage
