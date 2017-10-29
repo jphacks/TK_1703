@@ -31,8 +31,8 @@ recognition.addEventListener('result', function(event){
             $.get("https://kyamuise.xyz:1242/incr/1");
             stop();
             setTimeout(function () {
-                start();
-            }, 1000);
+                record();
+            }, 20000);
         }
         console.log(event.results);
         // setTimeout(record, 50);
