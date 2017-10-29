@@ -75,6 +75,14 @@ bot.on('message', function(data) {
 
     var text = data.text;
     console.log(text);
+    var smellId;
+    if(smellId = text.match(/([A-Ca-c])\s*発射/)[1].toUpperCase()) {
+
+    }else if(smellId = text.match(/([ＡＢＣａｂｃ])\s*発射/)[1].toUpperCase()) {
+         smellId = String.fromCharCode(s.charCodeAt(smellId) - 65248).toUpperCase;
+    }
+    console.log(smellId);
+
 
     // more information about additional params https://api.slack.com/methods/chat.postMessage
     var params = {
