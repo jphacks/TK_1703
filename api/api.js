@@ -74,25 +74,25 @@ bot.on('message', function(data) {
     }
 
     var text = data.text;
-    console.log(text);
     var smellId;
     if(smellId = text.match(/([A-Ca-c])\s*発射/)[1].toUpperCase()) {
-
+        sendTextToSlack(smellId+"の香りを発射します");
     }else if(smellId = text.match(/([ＡＢＣａｂｃ])\s*発射/)[1].toUpperCase()) {
-         smellId = String.fromCharCode(s.charCodeAt(smellId) - 65248).toUpperCase;
+        smellId = String.fromCharCode(s.charCodeAt(smellId) - 65248).toUpperCase;
+        sendTextToSlack(smellId+"の香りを発射します");
     }
-    console.log(smellId);
 
 
+});
+
+function sendTextToSlack(text) {
     // more information about additional params https://api.slack.com/methods/chat.postMessage
     var params = {
         as_user: false,
         icon_url: "https://files.slack.com/files-pri/T0MBZ99GF-F7R15P42V/kagikaigi_icon_sq.png"
     };
-    bot.postMessageToChannel('banana-test', data.text, params);
-
-});
-
+    bot.postMessageToChannel('banana-test', text, params);
+}
 /*
  * WebSocket client
  */
