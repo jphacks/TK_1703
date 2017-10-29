@@ -32,7 +32,7 @@ app.get('/incr/:type', function(req, res) {
         }
     }
     if(req.params.type == 1) {
-        negativeCount++;
+        positiveCount++;
         console.log("positiveCount: "+positiveCount);
         if (positiveCount == 5) {
             sendSmellToClient("B");
@@ -46,7 +46,7 @@ app.get('/incr/:type', function(req, res) {
 * Slack Bot
 */
 var bot = new SlackBot({
-    token: 'xoxb-263602966868-uE4FTKfQz4slMyviSBpmsBtv', // Add a bot https://my.slack.com/services/new/bot and put the token
+    token: 'xoxb-263602966868-289ZE4D4n4f7IeglH77avOl3', // Add a bot https://my.slack.com/services/new/bot and put the token
     name: 'banana-bot'
 });
 
@@ -68,7 +68,7 @@ bot.on('start', function() {
     };
 
     // define channel, where bot exist. You can adjust it there https://my.slack.com/services
-    bot.postMessageToChannel('banana-test', 'バナナ!', params);
+    bot.postMessageToChannel('banana-test', 'Hello!', params);
 });
 
 bot.on('message', function(data) {
