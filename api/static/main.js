@@ -29,7 +29,7 @@ recognition.addEventListener('result', function(event){
         if(negativeWords.test(text)) {
             console.log("negative");
             $.get("https://kyamuise.xyz:1242/incr/1");
-            stop();
+            recognition.abort();
             setTimeout(function () {
                 record();
             }, 20000);
