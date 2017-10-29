@@ -86,7 +86,8 @@ bot.on('message', function(data) {
                 enabled: false,
                 state: 0,
                 numSections: 0,
-                sections: []
+                sections: [],
+                startTime: 0
             }
             sendTextToSlack("タイムテーブルを破棄しました。");
 
