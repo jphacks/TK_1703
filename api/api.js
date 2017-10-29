@@ -58,6 +58,7 @@ var bot = new SlackBot({
 bot.on('start', function() {
     // more information about additional params https://api.slack.com/methods/chat.postMessage
     var params = {
+        as_user: false,
         icon_url: "https://files.slack.com/files-pri/T0MBZ99GF-F7R15P42V/kagikaigi_icon_sq.png"
     };
 
@@ -77,6 +78,7 @@ bot.on('message', function(data) {
 
     // more information about additional params https://api.slack.com/methods/chat.postMessage
     var params = {
+        as_user: false,
         icon_url: "https://files.slack.com/files-pri/T0MBZ99GF-F7R15P42V/kagikaigi_icon_sq.png"
     };
     bot.postMessageToChannel('banana-test', data.text, params);
