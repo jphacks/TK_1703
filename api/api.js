@@ -68,7 +68,7 @@ bot.on('start', function() {
     };
 
     // define channel, where bot exist. You can adjust it there https://my.slack.com/services
-    bot.postMessageToChannel('banana-test', 'バナナ!', params);
+    bot.postMessageToChannel('banana-test', 'Hello!', params);
 });
 
 bot.on('message', function(data) {
@@ -158,7 +158,7 @@ function timetableTransitions() {
         }else{
             setTimeout(function(){
                 sendSmellToClient(section.smellId);
-                sendTextToSlack((i+1)+"番目のセクションです。");
+                sendTextToSlack((i)+"番目のセクションです。");
             }, timetable.sections[i-1].duration);
         }
     }
