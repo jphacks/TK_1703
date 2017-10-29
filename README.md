@@ -42,6 +42,7 @@
 今回スポンサーから提供されたAPI、製品などの外部技術があれば記述をして下さい。
 
 * 音声認識API
+* Slack Real Time Messaging API
 
 #### フレームワーク・ライブラリ・モジュール
 * Express
