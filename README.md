@@ -1,6 +1,6 @@
 # かぎかいぎ
 
-[![かぎかいぎデモ1](video/demo2sum.png)](video/demo2.mp4)
+[![かぎかいぎデモ1](video/demo2sum.png)](https://raw.githubusercontent.com/jphacks/TK_1703/master/video/demo2.mp4)
 
 ## 製品概要
 ### におい x Tech
