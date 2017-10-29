@@ -80,13 +80,15 @@ bot.on('message', function(data) {
     var text = data.text;
 
     if(timetable.enabled) {
-        if(text.match(/キャンセル|取り消し|取消/)) {
+        if(text.match(/キャンセル|取り消し|取消|破棄|やめる/)) {
             timetable = {
                 enabled: false,
                 state: 0,
                 numSections: 0,
                 sections: []
             }
+            sendTextToSlack("タイムテーブルを破棄しました。");
+
         }
         createTimetable(text);
         return;
@@ -128,10 +130,10 @@ function createTimetable(text) {
             } else {
                 timetable.state = 4;//完了
                 sendTextToSlack("タイムテーブルの作成が完了しました！");
+                sendTextToSlack(JSON.stringify(timetable));
                 break;
             }
             sendTextToSlack((timetable.sections.length+1)+"番目のセクションは何分間ですか？");
-            sendTextToSlack(JSON.stringify(timetable));
             break;
         case 4:
             sendTextToSlack("タイムテーブルが作成されています！");
