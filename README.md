@@ -1,9 +1,13 @@
 # かぎかいぎ
 
+**デモ動画**
+
 [![かぎかいぎデモ1](video/demo2sum.png)](https://raw.githubusercontent.com/jphacks/TK_1703/master/video/demo2.mp4)
 
 ## 製品概要
 ### におい x Tech
+
+![logo](img/kagikaigi_logo@2x.png)
 
 ### 背景（製品開発のきっかけ、課題等）
 
