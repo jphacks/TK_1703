@@ -52,7 +52,7 @@ recognition.addEventListener('result', function(event){
 
 
 $(function() {
-    $("#recStart").on("click", (e) =>{
+    // $("#recStart").on("click", (e) =>{
         record();
-    });
+    // });
 });
