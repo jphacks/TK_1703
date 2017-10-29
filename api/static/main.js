@@ -41,7 +41,7 @@ recognition.addEventListener('result', function(event){
             abort();
             setTimeout(function () {
                 record();
-            }, 20000);
+            }, 5000);
         }
         console.log(event.results);
         // setTimeout(record, 50);
