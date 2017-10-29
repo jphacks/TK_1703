@@ -51,7 +51,7 @@ app.get('/incr/:type', function(req, res) {
  * Slack Bot
  */
 var bot = new SlackBot({
-    token: 'xoxb-263602966868-SlhRcYGqxQhGUOH3xSDm9O9P', // Add a bot https://my.slack.com/services/new/bot and put the token
+    token: 'xoxb-263602966868-3D2HKK1BnAGH5g1GE9k1Y1BL', // Add a bot https://my.slack.com/services/new/bot and put the token
     name: 'banana-bot'
 });
 
@@ -75,9 +75,9 @@ bot.on('message', function(data) {
 
     var text = data.text;
     var smellId;
-    if(smellId = text.match(/([A-Ca-c])\s*発射/)[1].toUpperCase()) {
+    if(smellId = text.match(/([A-Da-d])\s*発射/)[1].toUpperCase()) {
         sendTextToSlack(smellId+"の香りを発射します");
-    }else if(smellId = text.match(/([ＡＢＣａｂｃ])\s*発射/)[1].toUpperCase()) {
+    }else if(smellId = text.match(/([ＡＢＣＤａｂｃｄ])\s*発射/)[1].toUpperCase()) {
         smellId = String.fromCharCode(s.charCodeAt(smellId) - 65248).toUpperCase;
         sendTextToSlack(smellId+"の香りを発射します");
     }
