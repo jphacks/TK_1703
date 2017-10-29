@@ -6,7 +6,7 @@ recognition.continuous = true;
 recognition.interimResults = true;
 
 var negativeWords = /だめ|ダメ|でも|しかし|いや|嫌|良くない|最悪|悪い/;
-var positiveWords = /おっけー|OK|はい|了解|なるほど|いいね/;
+var positiveWords = /おっけー|OK|はい|了解|なるほど|いいね|最高/;
 
 function record() {
     recognition.start();
