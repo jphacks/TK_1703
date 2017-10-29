@@ -77,7 +77,7 @@ bot.on('message', function(data) {
 
     // more information about additional params https://api.slack.com/methods/chat.postMessage
     var params = {
-        icon_uri: "https://files.slack.com/files-pri/T0MBZ99GF-F7R15P42V/kagikaigi_icon_sq.png"
+        icon_url: "https://files.slack.com/files-pri/T0MBZ99GF-F7R15P42V/kagikaigi_icon_sq.png"
     };
     bot.postMessageToChannel('banana-test', data.text, params);
 
