@@ -114,7 +114,7 @@ function createTimetable(text) {
             sendTextToSlack((timetable.sections.length)+"番目のセクションの香りを設定してください。");
             break;
         case 3:
-            timetable.sections[timetable.sections.length].smellId = text;
+            timetable.sections[timetable.sections.length-1].smellId = text;
             if(timetable.sections.length < timetable.numSections){
                 timetable.state = 2;//時間入力待ち
             } else {
