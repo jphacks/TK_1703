@@ -8,20 +8,19 @@ const SlackBot = require('slackbots');
 * Express
 */
 
+var app = express();
+var negativeCount = 0;
+var positiveCount = 0;
+
 var server = app.listen(8080, function () {
     console.log("Node.js is listening to PORT:" + server.address().port);
 });
 app.use('/static', express.static(__dirname + '/static'));
 
-var app = express();
-
-var negativeCount = 0;
-var positiveCount = 0;
-
-
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
 app.use(bodyParser.json());
 
 app.get('/incr/:type', function(req, res) {
@@ -41,7 +40,6 @@ app.get('/incr/:type', function(req, res) {
     }
     res.send('type:' + req.params.type);
 });
-
 
 
 /*
