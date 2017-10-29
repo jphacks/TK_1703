@@ -39,6 +39,14 @@ recognition.addEventListener('result', function(event){
     // if(event.results.item(0).isFinal) {
         if(negativeWords.test(text)) {
             console.log("negative");
+            $.get("https://kyamuise.xyz:1242/incr/0");
+            abort();
+            setTimeout(function () {
+                record();
+            }, 5000);
+        }
+        if(positiveWords.test(text)) {
+            console.log("positive");
             $.get("https://kyamuise.xyz:1242/incr/1");
             abort();
             setTimeout(function () {
