@@ -2,7 +2,7 @@
 
 **デモ動画**
 
-[![かぎかいぎデモ1](video/thumb.png)](https://raw.githubusercontent.com/jphacks/TK_1703/master/video/demo.mp4)
+[![かぎかいぎデモ1](video/thumb.png)](https://youtu.be/AlUW1v5Ie9c)
 
 ## 製品概要
 ### におい x Tech
