@@ -1,0 +1,8 @@
+default:
+    build: .
+    volumes:
+        - .:/usr/src/banana-api
+    environment:
+        - SLACK_BOT_KEY
+    ports:
+        - "5000:8080"
