@@ -29,6 +29,7 @@ app.get('/incr/:type', function(req, res) {
         console.log("negativeCount: "+negativeCount);
         if (negativeCount == 5) {
             sendSmellToClient("A");
+            negativeCount = 0;
         }
     }
     if(req.params.type == 1) {
@@ -36,6 +37,7 @@ app.get('/incr/:type', function(req, res) {
         console.log("positiveCount: "+positiveCount);
         if (positiveCount == 5) {
             sendSmellToClient("B");
+            positiveCount = 0;
         }
     }
     res.send('type:' + req.params.type);
@@ -47,7 +49,8 @@ app.get('/incr/:type', function(req, res) {
 */
 var bot = new SlackBot({
     token: process.env.SLACK_BOT_KEY, // Add a bot https://my.slack.com/services/new/bot and put the token
-    name: 'aromeeting'
+    name: 'aromeeting',
+    icon_url: "https://files.slack.com/files-pri/T0MBZ99GF-F7R15P42V/kagikaigi_icon_sq.png"
 });
 
 var timetable = {
@@ -64,7 +67,6 @@ bot.on('start', function() {
     // more information about additional params https://api.slack.com/methods/chat.postMessage
     var params = {
         as_user: false,
-        icon_url: "https://files.slack.com/files-pri/T0MBZ99GF-F7R15P42V/kagikaigi_icon_sq.png"
     };
 
     // define channel, where bot exist. You can adjust it there https://my.slack.com/services
