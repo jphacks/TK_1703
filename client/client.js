@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 const WebSocketClient = require('websocket').client;
 const request = require('request');
+const child_process = require('child_process');
+
 
 
 var client = new WebSocketClient();
@@ -21,7 +23,7 @@ client.on('connect', function(connection) {
         if (message.type === 'utf8') {
             console.log("Received: '" + message.utf8Data + "'");
             let body = JSON.parse(message.utf8Data)
-            sendCommand(body.command, body.duration);//TODO ここはSlackをよしなに
+            execCommand(body.command, body.duration);//TODO ここはSlackをよしなに
         }
     });
 
@@ -34,18 +36,20 @@ client.on('connect', function(connection) {
 
 });
 
-var sendCommand = function (command, duration) {
+var execCommand = function (smellType, duration) {
 
-    var URL = 'http://192.168.0.4:8000/cgi-bin/Banana.py';
+    var cmd = '../pi/spoutSmell ' + smellType;
 
-    request.get({
-        uri: URL,
-        qs: {
-            command: command
-        },
-    }, function(err, req, data){
-        console.log(data);
+    child_process.exec(cmd, (error, stdout, stderr) => {
+        if ( error instanceof Error) {
+            console.error(error);
+            console.log('exec Error *******');
+        } else {
+            console.log(stdout);
+            console.log('spoutSmell command executed!');
+    }
     });
 }
+
 
 client.connect('ws://kyamuise.xyz:5000/', 'echo-protocol');
