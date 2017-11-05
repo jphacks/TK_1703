@@ -82,22 +82,16 @@ bot.on('message', function(data) {
 
     var text = data.text;
 
-    if(timetable.enabled) {
-        if(text.match(/キャンセル|取り消し|取消|破棄|やめる/)) {
-            timetable = {
-                enabled: false,
-                state: 0,
-                numSections: 0,
-                sections: [],
-                startTime: 0
-            }
-            sendTextToSlack("タイムテーブルを破棄しました。");
-
-        }
-        createTimetable(text);
+    if(timetable.enabled === true || text.match(/タイムテーブル/)) {
+        timetableMode(text);
+        return;
+    } else {
+        simpleMode(text);
         return;
     }
+});
 
+function simpleMode(text) {
     var smellId;
     if(mc = text.match(/([A-Da-d])\s*発射/)) {
         smellId = mc[1].toUpperCase();
@@ -108,14 +102,33 @@ bot.on('message', function(data) {
         smellId = String.fromCharCode(mc[1].charCodeAt(mc[1]) - 65248).toUpperCase();
         sendTextToSlack(smellId+"の香りを発射します");
         sendSmellToClient(smellId);
-    }if(text.match(/タイムテーブル/)) {
+    }else{
+        sendTextToSlack("有効コマンドじゃないよ！");
+    }
+}
+
+function timetableMode(text) {
+    if(timetable.enabled === false) {
         timetable.enabled = true;
         timetable.state = 1;
         sendTextToSlack("タイムテーブルを作成します。セクション数を入力してください。");
-    }
-});
+        return;
+    } else if(text.match(/キャンセル|取り消し|取消|破棄|やめる/)) {
+        timetable = {
+            enabled: false,
+            state: 0,
+            numSections: 0,
+            sections: [],
+            startTime: 0
+        }
+        sendTextToSlack("タイムテーブルを破棄しました。");
 
-function createTimetable(text) {
+    } else {
+        constructTimetable(text);
+    }
+}
+
+function constructTimetable(text) {
     switch (timetable.state) {
         case 1:
             timetable.numSections = Number(text);
