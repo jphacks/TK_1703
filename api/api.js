@@ -104,7 +104,7 @@ bot.on('message', function(data) {
     if(timetable.enabled === true || text.match(/タイムテーブル/)) {
         timetableMode(text);
         return;
-    } else if(otsuCurry.enabled == true || text.match(/.*会議(開始|はじめ|始め).*/)) {
+    } else if(otsuCurry.enabled == true || text.match(/.*(会議(開始|はじめ|始め|スタート|すたーと)|(おつかりー|おつカリー|オツカリー)).*/)) {
         console.log("会議はじめ");
         otsuCurryMode(text);
     } else {
@@ -139,6 +139,10 @@ function otsuCurryMode(text) {
         setTimeout(() => {
             sendSmellToClient(otsuCurry.smellId);
         }, otsuCurry.duration);
+    } else if(text.match(/.*(キャンセル|取り消し|取消|破棄|やめる|完了|終わり|おわり).*/)) {
+        sendTextToSlack("おつカレー！！今日は良い会議ができたね！\nさあ、一緒に踊ろう :dancer: ");
+        initOtsuCurry();
+        return;
     }
 }
 
@@ -220,6 +224,15 @@ function initTimetable() {
         startTime: 0,
         currentSection: 0
     }
+    return;
+}
+
+function initOtsuCurry() {
+    otsuCurry = {
+        enabled: false,
+        duration: 0,
+        smellId: "A"
+    };
     return;
 }
 
