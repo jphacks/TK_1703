@@ -55,6 +55,15 @@ app.get('/furefure', function(req, res) {
 
 });
 
+app.get('/kikkake/:smellId', function(req, res) {
+    var smellId = req.params.smellId;
+    if(smellId.match(/([A-D])/)) {
+        res.send(smellId+"の香りを発射します");
+        sendSmellToClient(smellId);
+    } else {
+        res.send("invalid smell ID");
+    }
+});
 
 /*
 * Slack Bot
@@ -138,7 +147,7 @@ function otsuCurryMode(text) {
         mc = text.match(/(\d+)分?/);
         otsuCurry.duration = Number(mc[1])*60*1000;
         console.log(mc[1]+"分");
-        sendTextToSlack("会議スタート！");
+        sendTextToSlack(mc[1]+"分だね。会議スタート！");
         setTimeout(() => {
             sendSmellToClient(otsuCurry.smellId);
         }, otsuCurry.duration);
