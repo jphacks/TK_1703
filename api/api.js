@@ -61,7 +61,7 @@ app.get('/furefure', function(req, res) {
 */
 var bot = new SlackBot({
     token: process.env.SLACK_BOT_KEY, // Add a bot https://my.slack.com/services/new/bot and put the token
-    name: 'aromeeting',
+    name: 'Perfumecation',
     icon_url: "https://files.slack.com/files-pri/T0MBZ99GF-F7R15P42V/kagikaigi_icon_sq.png"
 });
 
