@@ -11,6 +11,7 @@ const SlackBot = require('slackbots');
 var app = express();
 var negativeCount = 0;
 var positiveCount = 0;
+var furefureCount = 0;
 
 var server = app.listen(8080, function () {
     console.log("Node.js is listening to PORT:" + server.address().port);
@@ -41,6 +42,15 @@ app.get('/incr/:type', function(req, res) {
         }
     }
     res.send('type:' + req.params.type);
+});
+
+app.get('/furefure', function(req, res) {
+    furefureCount++;
+
+    if(furefureCount == 50) {
+        furefureCount = 0;
+        sendSmellToClient("A");
+    }
 });
 
 
@@ -86,6 +96,8 @@ bot.on('message', function(data) {
     if(timetable.enabled === true || text.match(/タイムテーブル/)) {
         timetableMode(text);
         return;
+    } else if(text.match(/.*会議(開始|はじめ|始め).*/)) {
+        console.log("会議はじめ");
     } else {
         simpleMode(text);
         return;
