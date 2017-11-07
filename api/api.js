@@ -51,7 +51,8 @@ app.get('/furefure', function(req, res) {
         furefureCount = 0;
         sendSmellToClient("A");
     }
-    console.log('recieve furefure');
+    res.send('furefure accepted:'+furefureCount);
+
 });
 
 
@@ -73,6 +74,12 @@ var timetable = {
     ],
     startTime: 0,
     currentSection: 0
+};
+
+var otsuCurry = {
+    enabled: false,
+    duration: 0,
+    smellId: "A"
 };
 
 bot.on('start', function() {
@@ -97,8 +104,9 @@ bot.on('message', function(data) {
     if(timetable.enabled === true || text.match(/タイムテーブル/)) {
         timetableMode(text);
         return;
-    } else if(text.match(/.*会議(開始|はじめ|始め).*/)) {
+    } else if(otsuCurry.enabled == true || text.match(/.*会議(開始|はじめ|始め).*/)) {
         console.log("会議はじめ");
+
     } else {
         simpleMode(text);
         return;
@@ -118,6 +126,19 @@ function simpleMode(text) {
         sendSmellToClient(smellId);
     }else{
         sendTextToSlack("有効コマンドじゃないよ！");
+    }
+}
+
+function otsuCurryMode(text) {
+    if(otsuCurry.enabled == false) {
+        sendTextToSlack("おつかりーモード始めるよ！\n何分の会議？");
+        otsuCurry.enabled = true;
+    } else if (otsuCurry.duration == 0) {
+        otsuCurry.duration = Number(text)*60*1000;
+        sendTextToSlack("会議スタート！");
+        setTimeout(() => {
+            sendSmellToClient(otsuCurry.smellId);
+        }, otsuCurry.duration);
     }
 }
 
