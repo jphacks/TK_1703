@@ -106,7 +106,7 @@ bot.on('message', function(data) {
         return;
     } else if(otsuCurry.enabled == true || text.match(/.*会議(開始|はじめ|始め).*/)) {
         console.log("会議はじめ");
-
+        otsuCurryMode(text);
     } else {
         simpleMode(text);
         return;
