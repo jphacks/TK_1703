@@ -51,6 +51,7 @@ app.get('/furefure', function(req, res) {
         furefureCount = 0;
         sendSmellToClient("A");
     }
+    console.log('recieve furefure');
 });
 
 
