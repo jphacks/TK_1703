@@ -81,6 +81,7 @@ var otsuCurry = {
     duration: 0,
     smellId: "A"
 };
+var otsuCurryTimer;
 
 bot.on('start', function() {
     // more information about additional params https://api.slack.com/methods/chat.postMessage
@@ -134,7 +135,9 @@ function otsuCurryMode(text) {
         sendTextToSlack("おつかりーモード始めるよ！\n何分の会議？");
         otsuCurry.enabled = true;
     } else if (otsuCurry.duration == 0) {
-        otsuCurry.duration = Number(text)*60*1000;
+        mc = text.match(/(\d+)分?/);
+        otsuCurry.duration = Number(mc[1])*60*1000;
+        console.log(mc[1]+"分");
         sendTextToSlack("会議スタート！");
         setTimeout(() => {
             sendSmellToClient(otsuCurry.smellId);
@@ -233,6 +236,7 @@ function initOtsuCurry() {
         duration: 0,
         smellId: "A"
     };
+    clearTimeout(otsuCurryTimer);
     return;
 }
 
