@@ -39,5 +39,3 @@ https://kyamuise.xyz:1242/otsu-curry/300
 ### ```/otsu-curry/cancell```
 
 おつカレーモードキャンセル
-
-DURATIONでは会議の長さを秒単位で
