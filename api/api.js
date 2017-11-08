@@ -13,6 +13,25 @@ var negativeCount = 0;
 var positiveCount = 0;
 var furefureCount = 0;
 
+var timetable = {
+    enabled: false,
+    state: 0, //0開始前、1セクション数入力完了、2時間設定完了, 3香り設定完了、4終了
+    numSections: 0,
+    sections: [
+
+    ],
+    startTime: 0,
+    currentSection: 0
+};
+
+var otsuCurry = {
+    enabled: false,
+    duration: 0,
+    smellId: "A"
+};
+var otsuCurryTimer;
+
+
 var server = app.listen(8080, function () {
     console.log("Node.js is listening to PORT:" + server.address().port);
 });
@@ -64,6 +83,10 @@ app.get('/otsu-curry/:duration', function(req, res) {
         smellId: "A"
     };
 
+    otsuCurryTimer = setTimeout(() => {
+        sendSmellToClient(otsuCurry.smellId);
+    }, otsuCurry.duration);
+
     res.send('otsu-curry accepted\nduration:'+duration);
 
 });
@@ -92,24 +115,6 @@ var bot = new SlackBot({
     name: 'Perfumecation',
     icon_url: "https://files.slack.com/files-pri/T0MBZ99GF-F7R15P42V/kagikaigi_icon_sq.png"
 });
-
-var timetable = {
-    enabled: false,
-    state: 0, //0開始前、1セクション数入力完了、2時間設定完了, 3香り設定完了、4終了
-    numSections: 0,
-    sections: [
-
-    ],
-    startTime: 0,
-    currentSection: 0
-};
-
-var otsuCurry = {
-    enabled: false,
-    duration: 0,
-    smellId: "A"
-};
-var otsuCurryTimer;
 
 bot.on('start', function() {
     // more information about additional params https://api.slack.com/methods/chat.postMessage
@@ -167,7 +172,7 @@ function otsuCurryMode(text) {
         otsuCurry.duration = Number(mc[1])*60*1000;
         console.log(mc[1]+"分");
         sendTextToSlack(mc[1]+"分だね。会議スタート！");
-        setTimeout(() => {
+        otsuCurryTimer = setTimeout(() => {
             sendSmellToClient(otsuCurry.smellId);
         }, otsuCurry.duration);
     } else if(text.match(/.*(キャンセル|取り消し|取消|破棄|やめる|完了|終わり|おわり).*/)) {
