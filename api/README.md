@@ -1,5 +1,19 @@
 URL: https://kyamuise.xyz:1242
 
+### ```/incr/TYPE```
+
+ポジティブ、ネガティブカウントを増やす。
+
+TYPEはネガティブなら0, ポジティブなら1
+
+#### example
+
+ネガティブカウントを増やす
+
+```
+https://kyamuise.xyz:1242/incr/0
+```
+
 ### ```/kikkake/SMELL_ID```
 
 きっかけモード
