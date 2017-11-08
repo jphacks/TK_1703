@@ -23,7 +23,7 @@ client.on('connect', function(connection) {
         if (message.type === 'utf8') {
             console.log("Received: '" + message.utf8Data + "'");
             let body = JSON.parse(message.utf8Data)
-            execCommand(body.command, body.duration);//TODO ここはSlackをよしなに
+            execCommand(body.command, body.amount);
         }
     });
 
@@ -36,9 +36,9 @@ client.on('connect', function(connection) {
 
 });
 
-var execCommand = function (smellType, duration) {
+var execCommand = function (smellType, amount) {
 
-    var cmd = '../pi/spoutSmell ' + smellType;
+    var cmd = '../pi/spoutSmell ' + smellType + " " + amount;
 
     child_process.exec(cmd, (error, stdout, stderr) => {
         if ( error instanceof Error) {

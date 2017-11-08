@@ -331,9 +331,10 @@ wsServer.on('request', function(request) {
 /*
  * Utils
  */
-function sendSmellToClient(type) {
+function sendSmellToClient(type, amount=1) {
     var res = {
-        command: type
+        command: type,
+        amount: amount
     };
     connection.sendUTF(JSON.stringify(res));
 }
