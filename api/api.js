@@ -43,7 +43,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-app.get('/incr/:type', function(req, res) {
+app.get('/posi-nega/:type', function(req, res) {
     if(req.params.type == 0) {
         negativeCount++;
         console.log("negativeCount: "+negativeCount);

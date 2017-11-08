@@ -1,6 +1,6 @@
 URL: https://kyamuise.xyz:1242
 
-### ```/incr/TYPE```
+### ```/posi-nega/TYPE```
 
 ポジティブ、ネガティブカウントを増やす。
 
