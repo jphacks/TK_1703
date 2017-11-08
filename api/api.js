@@ -55,6 +55,25 @@ app.get('/furefure', function(req, res) {
 
 });
 
+app.get('/otsu-curry/:duration', function(req, res) {
+
+    let duration = Number(req.params.duration);
+    otsuCurry = {
+        enabled: true,
+        duration: duration,
+        smellId: "A"
+    };
+
+    res.send('otsu-curry accepted\nduration:'+duration);
+
+});
+
+app.get('/otsu-curry/cancell', function(req, res) {
+
+    initOtsuCurry();
+    res.send('otsu-curry cancelled');
+});
+
 app.get('/kikkake/:smellId', function(req, res) {
     var smellId = req.params.smellId;
     if(smellId.match(/([A-D])/)) {
