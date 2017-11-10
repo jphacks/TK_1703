@@ -308,7 +308,7 @@ function originIsAllowed(origin) {
     return true;
 }
 
-wsServer.on('request', reques) => {
+wsServer.on('request', request => {
     if (!originIsAllowed(request.origin)) {
         // Make sure we only accept requests from an allowed origin
         request.reject();
