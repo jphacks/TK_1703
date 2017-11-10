@@ -27,12 +27,12 @@ var timetable = {
 var otsuCurry = {
     enabled: false,
     duration: 0,
-    smellId: "A"
+    slotId: "A"
 };
 var otsuCurryTimer;
 
 
-var server = app.listen(8080, function () {
+var server = app.listen(8080, () => {
     console.log("Node.js is listening to PORT:" + server.address().port);
 });
 app.use('/static', express.static(__dirname + '/static'));
@@ -43,7 +43,13 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
-app.get('/posi-nega/:type', function(req, res) {
+app.get('/init', (req, res) => {
+    initOtsuCurry();
+    initTimetable();
+    sendInitToClient();
+});
+
+app.get('/posi-nega/:type', (req, res) => {
     if(req.params.type == 0) {
         negativeCount++;
         console.log("negativeCount: "+negativeCount);
@@ -63,7 +69,7 @@ app.get('/posi-nega/:type', function(req, res) {
     res.send('type:' + req.params.type);
 });
 
-app.get('/furefure', function(req, res) {
+app.get('/furefure', (req, res) => {
     furefureCount++;
 
     if(furefureCount == 50) {
@@ -74,34 +80,34 @@ app.get('/furefure', function(req, res) {
 
 });
 
-app.get('/otsu-curry/:duration', function(req, res) {
+app.get('/otsu-curry/:duration', (req, res) => {
 
     let duration = Number(req.params.duration);
     otsuCurry = {
         enabled: true,
         duration: duration,
-        smellId: "A"
+        slotId: "A"
     };
 
     otsuCurryTimer = setTimeout(() => {
-        sendSmellToClient(otsuCurry.smellId);
+        sendSmellToClient(otsuCurry.slotId);
     }, otsuCurry.duration);
 
     res.send('otsu-curry accepted\nduration:'+duration);
 
 });
 
-app.get('/otsu-curry/cancell', function(req, res) {
+app.get('/otsu-curry/cancell', (req, res) => {
 
     initOtsuCurry();
     res.send('otsu-curry cancelled');
 });
 
-app.get('/kikkake/:smellId', function(req, res) {
-    var smellId = req.params.smellId;
-    if(smellId.match(/([A-D])/)) {
-        res.send(smellId+"の香りを発射します");
-        sendSmellToClient(smellId);
+app.get('/kikkake/:slotId', (req, res) => {
+    var slotId = req.params.slotId;
+    if(slotId.match(/([A-D])/)) {
+        res.send(slotId+"の香りを発射します");
+        sendSmellToClient(slotId);
     } else {
         res.send("invalid smell ID");
     }
@@ -116,7 +122,7 @@ var bot = new SlackBot({
     icon_url: "https://files.slack.com/files-pri/T0MBZ99GF-F7R15P42V/kagikaigi_icon_sq.png"
 });
 
-bot.on('start', function() {
+bot.on('start', () => {
     // more information about additional params https://api.slack.com/methods/chat.postMessage
     var params = {
         as_user: false,
@@ -126,7 +132,7 @@ bot.on('start', function() {
     bot.postMessageToChannel('banana-test', 'Hello!', params);
 });
 
-bot.on('message', function(data) {
+bot.on('message', (data) => {
     // all ingoing events https://api.slack.com/rtm
     console.log(data);
     if(data.type !== "message" || data.bot_id == "B7RL9BNSZ"){
@@ -148,16 +154,16 @@ bot.on('message', function(data) {
 });
 
 function simpleMode(text) {
-    var smellId;
+    var slotId;
     if(mc = text.match(/([A-Da-d])\s*発射/)) {
-        smellId = mc[1].toUpperCase();
-        sendTextToSlack(smellId+"の香りを発射します");
-        sendSmellToClient(smellId);
+        slotId = mc[1].toUpperCase();
+        sendTextToSlack(slotId+"の香りを発射します");
+        sendSmellToClient(slotId);
     }else if(mc = text.match(/([ＡＢＣＤａｂｃｄ])\s*発射/)) {
         // console.log(mc);
-        smellId = String.fromCharCode(mc[1].charCodeAt(mc[1]) - 65248).toUpperCase();
-        sendTextToSlack(smellId+"の香りを発射します");
-        sendSmellToClient(smellId);
+        slotId = String.fromCharCode(mc[1].charCodeAt(mc[1]) - 65248).toUpperCase();
+        sendTextToSlack(slotId+"の香りを発射します");
+        sendSmellToClient(slotId);
     }else{
         sendTextToSlack("有効コマンドじゃないよ！");
     }
@@ -173,7 +179,7 @@ function otsuCurryMode(text) {
         console.log(mc[1]+"分");
         sendTextToSlack(mc[1]+"分だね。会議スタート！");
         otsuCurryTimer = setTimeout(() => {
-            sendSmellToClient(otsuCurry.smellId);
+            sendSmellToClient(otsuCurry.slotId);
         }, otsuCurry.duration);
     } else if(text.match(/.*(キャンセル|取り消し|取消|破棄|やめる|完了|終わり|おわり).*/)) {
         sendTextToSlack("おつカレー！！今日は良い会議ができたね！\nさあ、一緒に踊ろう :dancer: ");
@@ -211,7 +217,7 @@ function constructTimetable(text) {
             sendTextToSlack((timetable.sections.length)+"番目のセクションの香りを設定してください。");
             break;
         case 3:
-            timetable.sections[timetable.sections.length-1].smellId = text;
+            timetable.sections[timetable.sections.length-1].slotId = text;
             if(timetable.sections.length < timetable.numSections){
                 timetable.state = 2;//時間入力待ち
             } else {
@@ -236,7 +242,7 @@ function constructTimetable(text) {
 function timetableTransitions() {
     let current = timetable.currentSection;
     let section = timetable.sections[current];
-    let smellId = section.smellId;
+    let slotId = section.slotId;
     let duration = section.duration;
 
     if (timetable.numSections == current) {
@@ -244,8 +250,8 @@ function timetableTransitions() {
         initTimetable();
     }
 
-    sendSmellToClient(smellId);
-    sendTextToSlack((current+1)+"番目のセクションです。香り"+smellId+"を発射します。");
+    sendSmellToClient(slotId);
+    sendTextToSlack((current+1)+"番目のセクションです。香り"+slotId+"を発射します。");
     setTimeout(() => {
         timetable.currentSection += 1;
     }, duration);
@@ -267,7 +273,7 @@ function initOtsuCurry() {
     otsuCurry = {
         enabled: false,
         duration: 0,
-        smellId: "A"
+        slotId: "A"
     };
     clearTimeout(otsuCurryTimer);
     return;
@@ -302,7 +308,7 @@ function originIsAllowed(origin) {
     return true;
 }
 
-wsServer.on('request', function(request) {
+wsServer.on('request', reques) => {
     if (!originIsAllowed(request.origin)) {
         // Make sure we only accept requests from an allowed origin
         request.reject();
@@ -313,7 +319,7 @@ wsServer.on('request', function(request) {
     connection = request.accept('echo-protocol', request.origin);
     console.log((new Date()) + ' Connection accepted.');
 
-    connection.on('message', function(message) {
+    connection.on('message', message => {
         if (message.type === 'utf8') {
             console.log('Received Message: ' + message.utf8Data);
             connection.sendUTF(message.utf8Data);
@@ -323,7 +329,7 @@ wsServer.on('request', function(request) {
         }
     });
 
-    connection.on('close', function(reasonCode, description) {
+    connection.on('close', (reasonCode, description) => {
         console.log((new Date()) + ' Peer ' + connection.remoteAddress + ' disconnected.');
     });
 });
@@ -331,10 +337,18 @@ wsServer.on('request', function(request) {
 /*
  * Utils
  */
-function sendSmellToClient(type, amount=1) {
+function sendSmellToClient(slotId, amount=1) {
     var res = {
-        command: type,
+        type: "spout",
+        slotId: slotId,
         amount: amount
+    };
+    connection.sendUTF(JSON.stringify(res));
+}
+
+function sendInitToClient() {
+    var res = {
+        type: "init"
     };
     connection.sendUTF(JSON.stringify(res));
 }

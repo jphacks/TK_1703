@@ -3,27 +3,29 @@ const WebSocketClient = require('websocket').client;
 const request = require('request');
 const child_process = require('child_process');
 
-
-
 var client = new WebSocketClient();
 
-client.on('connectFailed', function(error) {
+client.on('connectFailed', error => {
     console.log('Connect Error: ' + error.toString());
 });
 
-client.on('connect', function(connection) {
+client.on('connect', connection => {
     console.log('WebSocket Client Connected');
     connection.on('error', function(error) {
         console.log("Connection Error: " + error.toString());
     });
-    connection.on('close', function() {
+    connection.on('close', () =>  {
         console.log('echo-protocol Connection Closed');
     });
-    connection.on('message', function(message) {
+    connection.on('message', message => {
         if (message.type === 'utf8') {
             console.log("Received: '" + message.utf8Data + "'");
-            let body = JSON.parse(message.utf8Data)
-            execCommand(body.command, body.amount);
+            let body = JSON.parse(message.utf8Data);
+            if(body.type == "spout") {
+                execSpoutSmell(body.slotId, body.amount);
+            } else if (body.type == "init") {
+                init();
+            }
         }
     });
 
@@ -36,9 +38,22 @@ client.on('connect', function(connection) {
 
 });
 
-var execCommand = function (smellType, amount) {
+let init = () => {
+    slotConsumed = {
+        A: 0,
+        B: 0,
+        C: 0,
+        D: 0,
+        E: 0,
+        F: 0,
+        G: 0,
+        H: 0
+    };
+}
 
-    var cmd = '../pi/spoutSmell ' + smellType + " " + amount;
+let execSpoutSmell = (slotId, amount) => {
+
+    var cmd = '../pi/spoutSmell ' + slotId + " " + slotConsumed[slotId] + " " + amount;
 
     child_process.exec(cmd, (error, stdout, stderr) => {
         if ( error instanceof Error) {
@@ -47,9 +62,9 @@ var execCommand = function (smellType, amount) {
         } else {
             console.log(stdout);
             console.log('spoutSmell command executed!');
-    }
+        }
     });
 }
 
-
+init();
 client.connect('ws://kyamuise.xyz:5000/', 'echo-protocol');
