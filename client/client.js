@@ -55,6 +55,7 @@ let execSpoutSmell = (slotId, amount) => {
 
     var cmd = '../pi/spoutSmell ' + slotId + " " + slotConsumed[slotId] + " " + amount;
 
+    slotConsumed[slotId] += amount;
     child_process.exec(cmd, (error, stdout, stderr) => {
         if ( error instanceof Error) {
             console.error(error);
