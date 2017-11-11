@@ -47,7 +47,8 @@ let init = () => {
         E: 0,
         F: 0,
         G: 0,
-        H: 0
+        H: 0,
+        X: 0
     };
     execSpoutSmell("X", 1);
 }
