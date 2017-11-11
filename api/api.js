@@ -54,7 +54,7 @@ app.get('/posi-nega/:type', (req, res) => {
         negativeCount++;
         console.log("negativeCount: "+negativeCount);
         if (negativeCount == 5) {
-            sendSmellToClient("A");
+            sendSmellToClient("A", 1);
             negativeCount = 0;
         }
     }
@@ -62,7 +62,7 @@ app.get('/posi-nega/:type', (req, res) => {
         positiveCount++;
         console.log("positiveCount: "+positiveCount);
         if (positiveCount == 5) {
-            sendSmellToClient("B");
+            sendSmellToClient("B", 1);
             positiveCount = 0;
         }
     }
@@ -74,7 +74,7 @@ app.get('/furefure', (req, res) => {
 
     if(furefureCount == 50) {
         furefureCount = 0;
-        sendSmellToClient("A");
+        sendSmellToClient("A", 1);
     }
     res.send('furefure accepted:'+furefureCount);
 
@@ -90,7 +90,7 @@ app.get('/otsu-curry/:duration', (req, res) => {
     };
 
     otsuCurryTimer = setTimeout(() => {
-        sendSmellToClient(otsuCurry.slotId);
+        sendSmellToClient(otsuCurry.slotId, 3);
     }, otsuCurry.duration);
 
     res.send('otsu-curry accepted\nduration:'+duration);
@@ -107,7 +107,7 @@ app.get('/kikkake/:slotId', (req, res) => {
     var slotId = req.params.slotId;
     if(slotId.match(/([A-D])/)) {
         res.send(slotId+"の香りを発射します");
-        sendSmellToClient(slotId);
+        sendSmellToClient(slotId, 1);
     } else {
         res.send("invalid smell ID");
     }
@@ -158,12 +158,12 @@ function simpleMode(text) {
     if(mc = text.match(/([A-Da-d])\s*発射/)) {
         slotId = mc[1].toUpperCase();
         sendTextToSlack(slotId+"の香りを発射します");
-        sendSmellToClient(slotId);
+        sendSmellToClient(slotId, 2);
     }else if(mc = text.match(/([ＡＢＣＤａｂｃｄ])\s*発射/)) {
         // console.log(mc);
         slotId = String.fromCharCode(mc[1].charCodeAt(mc[1]) - 65248).toUpperCase();
         sendTextToSlack(slotId+"の香りを発射します");
-        sendSmellToClient(slotId);
+        sendSmellToClient(slotId, 2);
     }else{
         sendTextToSlack("有効コマンドじゃないよ！");
     }

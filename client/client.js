@@ -53,7 +53,7 @@ let init = () => {
 
 let execSpoutSmell = (slotId, amount) => {
 
-    var cmd = '../pi/spoutSmell ' + slotId + " " + slotConsumed[slotId] + " " + amount;
+    var cmd = 'python3 ../pi/spoutSmell.py ' + slotId + " " + slotConsumed[slotId] + " " + amount;
 
     slotConsumed[slotId] += amount;
     child_process.exec(cmd, (error, stdout, stderr) => {
