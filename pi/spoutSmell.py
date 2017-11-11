@@ -9,7 +9,7 @@ SPI_CH = 0
 READ_CH = 0
 
 param = sys.argv
-set_smell = int(param[1])
+set_smell = param[1]
 already_dgree = int(param[2])
 set_dgree = int(param[3])
 
