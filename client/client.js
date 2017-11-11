@@ -49,6 +49,7 @@ let init = () => {
         G: 0,
         H: 0
     };
+    execSpoutSmell("X", 1);
 }
 
 let execSpoutSmell = (slotId, amount) => {
