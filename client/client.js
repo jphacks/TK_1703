@@ -39,25 +39,21 @@ client.on('connect', connection => {
 });
 
 let init = () => {
-    slotConsumed = {
-        A: 0,
-        B: 0,
-        C: 0,
-        D: 0,
-        E: 0,
-        F: 0,
-        G: 0,
-        H: 0,
-        X: 0
-    };
+    slotConsumed = {A: 0, B: 0, C: 0, D: 0, E: 0, F: 0, G: 0, H: 0, X: 0};
     execSpoutSmell("X", 1);
 }
 
 let execSpoutSmell = (slotId, amount) => {
 
-    var cmd = 'python3 ../pi/spoutSmell.py ' + slotId + " " + slotConsumed[slotId] + " " + amount;
+    if (slotConsumed[slotId] === undefined) {
+        throw SlotExeption("Invalid Slot ID: " + slotId);
+    }
+
+    var cmd = "python3 ../pi/spoutSmell.py " + slotId + " " + slotConsumed[slotId] + " " + amount;
 
     slotConsumed[slotId] += amount;
+    
+    /* TODO クールタイム */
     child_process.exec(cmd, (error, stdout, stderr) => {
         if ( error instanceof Error) {
             console.error(error);
@@ -68,6 +64,11 @@ let execSpoutSmell = (slotId, amount) => {
         }
     });
 }
+
+let SlotExeption = (message) => {
+    this.message = message;
+    this.name = "SlotExeption";
+ }
 
 init();
 client.connect('ws://kyamuise.xyz:5000/', 'echo-protocol');
