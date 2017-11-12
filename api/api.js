@@ -180,9 +180,11 @@ function otsuCurryMode(text) {
         sendTextToSlack(mc[1]+"分だね。会議スタート！");
         otsuCurryTimer = setTimeout(() => {
             sendSmellToClient(otsuCurry.slotId);
+            initOtsuCurry();
         }, otsuCurry.duration);
-    } else if(text.match(/.*(キャンセル|取り消し|取消|破棄|やめる|完了|終わり|おわり).*/)) {
+    } else if(text.match(/.*(キャンセル|取り消し|取消|破棄|やめる|完了|終わり|おわり|終了).*/)) {
         sendTextToSlack("おつカレー！！今日は良い会議ができたね！\nさあ、一緒に踊ろう :dancer: ");
+        clearTimeout(otsuCurryTimer);        
         initOtsuCurry();
         return;
     }
@@ -194,7 +196,7 @@ function timetableMode(text) {
         timetable.state = 1;
         sendTextToSlack("タイムテーブルを作成します。セクション数を入力してください。");
         return;
-    } else if(text.match(/キャンセル|取り消し|取消|破棄|やめる/)) {
+    } else if(text.match(/キャンセル|取り消し|取消|破棄|やめる|終了/)) {
         initTimetable();
         sendTextToSlack("タイムテーブルを破棄しました。");
         return;
@@ -275,7 +277,6 @@ function initOtsuCurry() {
         duration: 0,
         slotId: "A"
     };
-    clearTimeout(otsuCurryTimer);
     return;
 }
 
