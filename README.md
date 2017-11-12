@@ -9,7 +9,7 @@
 ## 製品概要
 ### におい x Tech
 
-<img src="img/presen/Perfimication_presentation.003.png" height="200" />
+<img src="img/presen/Perfimication_presentation.003.png" />
 
 ### 背景（製品開発のきっかけ、課題等）
 
@@ -23,7 +23,7 @@
 
 日常的に人間は周囲からさまざまな方法で情報を得ています。しかし、PCやスマホなどのデバイスでは文字、画像、音によるコミュニケーションが主となっています。しかし、それらのコミュニケーション法は明確に、分かりやすい情報をしか伝えることができません。そこで我々は「におい」が持つ情報のあいまいさに着目し、それらをさまざまな利用シーンでの活用法を提案します。
 
-<img src="img/info.png" height="200" />
+<img src="img/info.png" />
 
 
 
